@@ -1,0 +1,9 @@
+
+
+
+1. Public users can submit messages anonymously via a public form.
+2. These messages will be stored in a database using a BaaS/headless CMS like Supabase or Firebase.
+3. The admin user will be able to log in to a personal dashboard.
+4. The dashboard will display a list of all messages.
+5. The admin can view the content of each message and choose to delete any message they deem inappropriate.
+6. Since the messages are submitted anonymously, the admin won't be able to see who submitted the messages.
