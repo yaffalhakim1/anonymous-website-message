@@ -6,7 +6,7 @@ function PublicForm() {
   return (
     <>
       <form className="">
-        <div className="flex  justify-center mt-5">
+        <div className="flex justify-center mt-5">
           <LogoIcon width="24px" height="24px" className="text-blue-500" />
           <h2 className="ml-2 text-lg font-semibold text-gray-900">
             Anonymous message
@@ -21,7 +21,7 @@ function PublicForm() {
             {"someone"}
           </span>
         </div>
-        <div className="mb-6 flex flex-col px-8 md:px-96">
+        <div className="mb-6 flex flex-col px-8 lg:px-96">
           <label className="block mb-2 text-sm font-medium text-black ">
             Your message
           </label>
@@ -34,7 +34,7 @@ function PublicForm() {
               placeholder="Write your thoughts here..."
             ></textarea>
           </div>
-          <Button onClick={() => {}} />
+          <Button onClick={() => {}} text="submit" />
           <div className="flex mt-3">
             <IconInfo className="mt-0.5 text-blue-500" />
             <p className="md:text-md text-sm text-gray-500 ml-1">

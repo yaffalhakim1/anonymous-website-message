@@ -1,56 +1,88 @@
-import React from "react";
+import { useState } from "react";
+import { Button } from "../base/Button";
+import { Comme } from "next/font/google";
+import CommentsCard from "./CommentsCard";
+import { Menu } from "../base/Icons";
 
-function Dashboard() {
+export function Dashboard() {
+  const [selectedSubMenuIndex, setSelectedSubMenuIndex] = useState(0);
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+
+  const subMenus = [
+    {
+      title: "Dashboard",
+      content: <CommentsCard />,
+    },
+    {
+      title: "Test",
+      content: "",
+    },
+  ];
+
+  const handleSubMenuClick = (index: number) => {
+    setSelectedSubMenuIndex(index);
+  };
+
+  const handleMobileSidebarToggle = () => {
+    setIsMobileSidebarOpen(!isMobileSidebarOpen);
+  };
+
   return (
     <>
-      <body className="bg-blue-600">
-        <span
-          className="absolute text-white text-4xl top-5 left-4 cursor-pointer"
-          //   onclick="openSidebar()"
+      <button
+        data-drawer-target="default-sidebar"
+        data-drawer-toggle="default-sidebar"
+        aria-controls="default-sidebar"
+        type="button"
+        className="hidden sm:inline-flex items-center p-2 mt-2 ml-3 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+      >
+        <span className="sr-only">Open sidebar</span>
+      </button>
+
+      <div className="sm:hidden">
+        <button
+          className="inline-flex items-center justify-center p-2 ml-3 text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+          onClick={handleMobileSidebarToggle}
         >
-          <i className="bi bi-filter-left px-2 bg-gray-900 rounded-md"></i>
-        </span>
-        <div className="sidebar fixed top-0 bottom-0 lg:left-0 p-2 w-[300px] overflow-y-auto text-center bg-gray-900">
-          <div className="text-gray-100 text-xl">
-            <div className="p-2.5 mt-1 flex items-center">
-              <h1 className="font-bold text-gray-200 text-[15px] ml-3">
-                Users dashboards
-              </h1>
-              <i
-                className="bi bi-x cursor-pointer ml-28 lg:hidden"
-                // onclick="openSidebar()"
-              ></i>
-            </div>
-          </div>
-          {/* <div className="p-2.5 flex items-center rounded-md px-4 duration-300 cursor-pointer bg-gray-700 text-white">
-            <i className="bi bi-search text-sm"></i>
-            <input
-              type="text"
-              placeholder="Search"
-              className="text-[15px] ml-4 w-full bg-transparent focus:outline-none"
-            />
-          </div> */}
-          <div className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
-            <i className="bi bi-house-door-fill"></i>
-            <span className="text-[15px] ml-4 text-gray-200 font-bold">
-              Home
-            </span>
-          </div>
-          <div className="my-4 bg-gray-600 h-[1px]"></div>
-          <div
-            className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white"
-            // onclick="dropdown()"
-          ></div>
-          <div className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
-            <i className="bi bi-box-arrow-in-right"></i>
-            <span className="text-[15px] ml-4 text-gray-200 font-bold">
-              Logout
-            </span>
-          </div>
+          <Menu />
+        </button>
+      </div>
+
+      <aside
+        id="default-sidebar"
+        className={`fixed top-0 left-0 z-40 w-64 h-screen transition-transform ${
+          isMobileSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } sm:translate-x-0`}
+        aria-label="Sidebar"
+      >
+        <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+          <ul className="space-y-2 font-medium">
+            {subMenus.map((subMenu, index) => (
+              <li key={index}>
+                <button
+                  className={`flex items-center justify-between w-full px-2 py-2 text-sm font-medium leading-5 text-gray-900 rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-600 ${
+                    selectedSubMenuIndex === index
+                      ? "bg-gray-100 dark:bg-gray-700"
+                      : ""
+                  }`}
+                  onClick={() => {
+                    handleSubMenuClick(index);
+                    setIsMobileSidebarOpen(false);
+                  }}
+                >
+                  <span className="flex items-center truncate">
+                    <span className="truncate">{subMenu.title}</span>
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ul>
         </div>
-      </body>
+      </aside>
+
+      <div className="p-4 sm:ml-64 ">
+        <div> {subMenus[selectedSubMenuIndex].content}</div>
+      </div>
     </>
   );
 }
-
-export default Dashboard;
