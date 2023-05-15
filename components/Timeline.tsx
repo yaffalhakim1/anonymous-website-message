@@ -3,7 +3,7 @@ import React from "react";
 function Timeline() {
   return (
     <>
-      <div className=" flex flex-col px-8 md:px-96">
+      <div className=" flex flex-col px-8 lg:px-96">
         <div className="mt-5">some messages secret</div>
         <form>
           <label htmlFor="chat" className="sr-only">

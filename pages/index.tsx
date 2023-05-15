@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <main className={`flex flex-col ${jakarta.className}`}>
       <PublicForm />
-      {/* <Timeline /> */}
+      <Timeline />
       {/* <Dashboard /> */}
     </main>
   );

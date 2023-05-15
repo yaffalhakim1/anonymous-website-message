@@ -1,17 +1,24 @@
-import { useState } from "react";
-import { Button } from "../base/Button";
-import { Comme } from "next/font/google";
+import { useEffect, useRef, useState } from "react";
+
 import CommentsCard from "./CommentsCard";
 import { Menu } from "../base/Icons";
 
 export function Dashboard() {
   const [selectedSubMenuIndex, setSelectedSubMenuIndex] = useState(0);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+  const sidebarRef = useRef<HTMLDivElement>(null);
 
   const subMenus = [
     {
-      title: "Dashboard",
-      content: <CommentsCard />,
+      title: "Comments",
+      content: (
+        <>
+          <CommentsCard />
+          <CommentsCard />
+          <CommentsCard />
+          <CommentsCard />
+        </>
+      ),
     },
     {
       title: "Test",
@@ -26,6 +33,24 @@ export function Dashboard() {
   const handleMobileSidebarToggle = () => {
     setIsMobileSidebarOpen(!isMobileSidebarOpen);
   };
+
+  const handleOutsideClick = (event: any) => {
+    if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+      setIsMobileSidebarOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isMobileSidebarOpen) {
+      document.addEventListener("mousedown", handleOutsideClick);
+    } else {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [isMobileSidebarOpen]);
 
   return (
     <>
@@ -48,15 +73,24 @@ export function Dashboard() {
         </button>
       </div>
 
+      {isMobileSidebarOpen && (
+        <div
+          className="fixed inset-0 z-50 bg-black opacity-50"
+          onClick={() => setIsMobileSidebarOpen(false)}
+        />
+      )}
+
       <aside
         id="default-sidebar"
-        className={`fixed top-0 left-0 z-40 w-64 h-screen transition-transform ${
+        className={`fixed top-0 left-0 z-50 w-64 h-screen transition-transform ${
           isMobileSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } sm:translate-x-0`}
         aria-label="Sidebar"
+        ref={sidebarRef}
       >
         <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
           <ul className="space-y-2 font-medium">
+            <p className="text-white">Dashboard</p>
             {subMenus.map((subMenu, index) => (
               <li key={index}>
                 <button
@@ -86,3 +120,11 @@ export function Dashboard() {
     </>
   );
 }
+
+//   content: (
+//     <>
+//     {commentsData.map((comment) => (
+//       <CommentsCard key={comment.id} comment={comment} />
+//     ))}
+//   </>
+// ),

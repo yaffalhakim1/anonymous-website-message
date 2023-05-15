@@ -34,7 +34,7 @@ function PublicForm() {
               placeholder="Write your thoughts here..."
             ></textarea>
           </div>
-          <Button onClick={() => {}} text="submit" />
+          <Button onClick={() => {}} text="Submit" variant="submit" />
           <div className="flex mt-3">
             <IconInfo className="mt-0.5 text-blue-500" />
             <p className="md:text-md text-sm text-gray-500 ml-1">
@@ -43,7 +43,7 @@ function PublicForm() {
           </div>
         </div>
       </form>
-      <div className="px-8 md:px-96">Timeline</div>
+      <div className="px-8 md:px-96 text-center">Timeline</div>
     </>
   );
 }
