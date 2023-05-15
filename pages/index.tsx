@@ -9,9 +9,9 @@ const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 export default function Home() {
   return (
     <main className={`flex flex-col ${jakarta.className}`}>
-      <PublicForm />
-      <Timeline />
-      {/* <Dashboard /> */}
+      {/* <PublicForm /> */}
+      {/* <Timeline /> */}
+      <Dashboard />
     </main>
   );
 }

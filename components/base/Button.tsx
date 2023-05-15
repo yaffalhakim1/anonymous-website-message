@@ -28,7 +28,7 @@ function BaseButton({ onClick, text, variant = "submit" }: ButtonProps) {
     variant === "delete"
       ? "bg-red-600 hover:bg-red-700 focus:ring-red-400"
       : "bg-blue-700 hover:bg-blue-800 focus:ring-blue-500";
-  const buttonText = variant === "delete" ? "Hapus" : text;
+  const buttonText = variant === "delete" ? text : text;
 
   return (
     <button

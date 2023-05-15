@@ -46,7 +46,6 @@ export function Dashboard() {
     } else {
       document.removeEventListener("mousedown", handleOutsideClick);
     }
-
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };

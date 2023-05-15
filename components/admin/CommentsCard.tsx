@@ -2,6 +2,8 @@ import React from "react";
 import { Button } from "../base/Button";
 
 function CommentsCard() {
+  const currentTime = new Date(Date.now()).toLocaleTimeString();
+  const currentDate = new Date(Date.now()).toLocaleDateString();
   return (
     <>
       <div className="p-4 border border-gray-200 rounded-lg dark:border-gray-700 mb-2">
@@ -12,9 +14,11 @@ function CommentsCard() {
             }
           </p>
           <div className="flex-shrink-0 ml-4">
-            <Button text={"Hapus"} variant="delete" />
+            <Button text={"Delete"} variant="delete" />
           </div>
         </div>
+
+        <p className="font-thin text-sm mt-2">{`${currentDate} - ${currentTime}`}</p>
       </div>
     </>
   );
