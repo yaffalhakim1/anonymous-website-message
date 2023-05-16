@@ -2,21 +2,37 @@ import { useEffect, useRef, useState } from "react";
 
 import CommentsCard from "./CommentsCard";
 import { Menu } from "../base/Icons";
+import useSWR from "swr";
+import { supabase } from "@/lib/supabaseClient";
 
 export function Dashboard() {
   const [selectedSubMenuIndex, setSelectedSubMenuIndex] = useState(0);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const sidebarRef = useRef<HTMLDivElement>(null);
 
+  async function fetcher(url: string) {
+    const { data, error } = await supabase
+      .from("messages")
+      .select("*")
+      .order("id", { ascending: true });
+
+    if (error) throw error;
+    return data;
+  }
+
+  const { data: messages, error: messagesError } = useSWR("messages", fetcher, {
+    revalidateOnFocus: true,
+    refreshInterval: 1000,
+  });
+
   const subMenus = [
     {
       title: "Comments",
       content: (
         <>
-          <CommentsCard />
-          <CommentsCard />
-          <CommentsCard />
-          <CommentsCard />
+          {messages?.map((message: any) => (
+            <CommentsCard key={message.id} messages={messages} />
+          ))}
         </>
       ),
     },

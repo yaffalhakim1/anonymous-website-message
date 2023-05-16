@@ -1,6 +1,6 @@
 import { memo, useEffect, useState } from "react";
 
-type ButtonVariant = "submit" | "delete";
+type ButtonVariant = "submit" | "delete" | "disabled";
 
 interface ButtonProps {
   onClick?: () => {};
@@ -24,12 +24,22 @@ function BaseButton({ onClick, text, variant = "submit" }: ButtonProps) {
   }, []);
 
   const buttonClass = isMobile ? "w-auto" : "w-full sm:w-auto";
-  const buttonColor =
-    variant === "delete"
-      ? "bg-red-600 hover:bg-red-700 focus:ring-red-400"
-      : "bg-blue-700 hover:bg-blue-800 focus:ring-blue-500";
-  const buttonText = variant === "delete" ? text : text;
+  let buttonColor = "";
+  let buttonText = text;
+  let isDisabled = false;
 
+  switch (variant) {
+    case "delete":
+      buttonColor = "bg-red-600 hover:bg-red-700 focus:ring-red-400";
+      break;
+    case "disabled":
+      buttonColor = "bg-gray-400 cursor-not-allowed";
+      isDisabled = true;
+      break;
+    default:
+      buttonColor = "bg-blue-700 hover:bg-blue-800 focus:ring-blue-500";
+      break;
+  }
   return (
     <button
       type="submit"
@@ -37,6 +47,7 @@ function BaseButton({ onClick, text, variant = "submit" }: ButtonProps) {
         variant === "delete" ? "bg-red-800" : "bg-blue-800"
       } focus:ring-2 focus:outline-none  font-medium rounded-lg text-sm ${buttonClass} px-5 py-2.5 text-center `}
       onClick={onClick}
+      disabled={isDisabled}
     >
       {buttonText}
     </button>

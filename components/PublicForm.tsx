@@ -1,7 +1,9 @@
-import { memo, useState } from "react";
+import { useState } from "react";
 import { LogoIcon, IconInfo } from "./base/Icons";
 import { Button } from "./base/Button";
 import { supabase } from "../lib/supabaseClient";
+import useSWR from "swr";
+import Messages from "./Messages";
 
 function PublicForm() {
   const [message, setMessage] = useState("");
@@ -11,9 +13,7 @@ function PublicForm() {
     setLoading(true);
     const { data, error } = await supabase
       .from("messages")
-
       .insert([{ message }]);
-
     console.log(data, error);
 
     if (error) {
@@ -23,6 +23,21 @@ function PublicForm() {
     }
     setLoading(false);
   }
+
+  async function fetcher(url: string) {
+    const { data, error } = await supabase
+      .from("messages")
+      .select("*")
+      .order("id", { ascending: true });
+
+    if (error) throw error;
+    return data;
+  }
+
+  const { data: messages, error: messagesError } = useSWR("messages", fetcher, {
+    revalidateOnFocus: true,
+    refreshInterval: 1000,
+  });
 
   return (
     <>
@@ -59,7 +74,7 @@ function PublicForm() {
         <Button
           onClick={() => sendMessage(message)}
           text={loading ? "Sending..." : "Submit"}
-          variant="submit"
+          variant={loading ? "disabled" : "submit"}
         />
         <div className="flex mt-3">
           <IconInfo className="mt-0.5 text-blue-500" />
@@ -70,6 +85,15 @@ function PublicForm() {
       </div>
 
       <div className="px-8 md:px-96 text-center">Timeline</div>
+      <div>
+        {messagesError ? (
+          <div>Error loading messages</div>
+        ) : !messages ? (
+          <div>Loading...</div>
+        ) : (
+          <Messages messages={messages} />
+        )}
+      </div>
     </>
   );
 }
