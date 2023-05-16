@@ -30,9 +30,13 @@ export function Dashboard() {
       title: "Comments",
       content: (
         <>
-          {messages?.map((message: any) => (
-            <CommentsCard key={message.id} messages={messages} />
-          ))}
+          {messagesError ? (
+            <div>Error loading messages</div>
+          ) : !messages ? (
+            <div>Loading...</div>
+          ) : (
+            <CommentsCard messages={messages} />
+          )}
         </>
       ),
     },
@@ -135,11 +139,3 @@ export function Dashboard() {
     </>
   );
 }
-
-//   content: (
-//     <>
-//     {commentsData.map((comment) => (
-//       <CommentsCard key={comment.id} comment={comment} />
-//     ))}
-//   </>
-// ),

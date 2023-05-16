@@ -13,10 +13,11 @@ function CommentsCard({ messages }: { messages: any[] }) {
       .eq("id", messageId);
 
     if (error) {
-      console.error(error);
+      console.log({ error });
       return { error };
     }
     setLoading(false);
+    console.log({ data });
     return { data };
   }
 

@@ -14,13 +14,12 @@ function PublicForm() {
     const { data, error } = await supabase
       .from("messages")
       .insert([{ message }]);
-    console.log(data, error);
 
     if (error) {
-      console.log(error);
-    } else {
-      console.log(data);
+      console.log({ error });
+      return { error };
     }
+
     setLoading(false);
   }
 

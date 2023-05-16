@@ -1,13 +1,9 @@
-import { supabase } from "@/lib/supabaseClient";
-import { useEffect, useState } from "react";
-import useSWR from "swr";
-
 function Messages({ messages }: { messages: any[] }) {
   return (
     <>
-      {messages.map((message, index) => (
-        <div key={index} className="flex flex-col px-8 lg:px-96">
-          <div className="mt-5">{message.message}</div>
+      {messages.map((message) => (
+        <div key={message.id} className="flex flex-col px-8 lg:px-96">
+          <div className="mt-5">{`Message ${message.id}: ${message.message}`}</div>
           <form>
             <div className="flex items-center py-2 rounded-lg">
               <textarea
