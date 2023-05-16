@@ -5,9 +5,9 @@ import { Dashboard } from "@/components/admin/Dashboard";
 export default function Home() {
   return (
     <main className="flex flex-col">
-      {/* <PublicForm /> */}
+      <PublicForm />
 
-      <Dashboard />
+      {/* <Dashboard /> */}
     </main>
   );
 }
