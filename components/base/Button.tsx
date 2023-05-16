@@ -3,7 +3,7 @@ import { memo, useEffect, useState } from "react";
 type ButtonVariant = "submit" | "delete";
 
 interface ButtonProps {
-  onClick?: () => void;
+  onClick?: () => {};
   text: string;
   variant?: ButtonVariant;
 }

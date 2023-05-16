@@ -1,14 +1,39 @@
-import React from "react";
+import { supabase } from "@/lib/supabaseClient";
+import { useEffect, useState } from "react";
+import useSWR from "swr";
 
 function Timeline() {
+  // const [messages, setMessages] = useState<any>([]);
+
+  async function fetcher(url: string) {
+    const { data, error } = await supabase
+      .from("messages")
+      .select("*")
+      .order("id", { ascending: true });
+
+    if (error) throw error;
+    return data;
+  }
+
+  const { data: messages, error: messagesError } = useSWR("messages", fetcher, {
+    revalidateOnFocus: true,
+    refreshInterval: 1000,
+  });
+
   return (
     <>
       <div className=" flex flex-col px-8 lg:px-96">
-        <div className="mt-5">some messages secret</div>
+        <div className="mt-5">
+          {messagesError && (
+            <div className="text-red-500">Error fetching messages</div>
+          )}
+          {!messages && <div>Loading messages...</div>}
+          {messages &&
+            messages.map((message) => (
+              <div key={message.id}>{message.message}</div>
+            ))}
+        </div>
         <form>
-          <label htmlFor="chat" className="sr-only">
-            Your message
-          </label>
           <div className="flex items-center py-2 rounded-lg">
             <textarea
               id="chat"
