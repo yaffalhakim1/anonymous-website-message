@@ -23,7 +23,7 @@ function BaseButton({ onClick, text, variant = "submit" }: ButtonProps) {
     };
   }, []);
 
-  const buttonClass = isMobile ? "w-auto" : "w-full sm:w-auto";
+  const buttonClass = isMobile ? "w-auto" : "w-full w-auto";
   let buttonColor = "";
   let buttonText = text;
   let isDisabled = false;
