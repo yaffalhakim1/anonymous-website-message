@@ -11,7 +11,7 @@ import { supabase } from "@/lib/supabaseClient";
 function ManageMessage({ session }: { session: Session }) {
   const [selectedSubMenuIndex, setSelectedSubMenuIndex] = useState(0);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
-  const supabase = useSupabaseClient();
+  const supabaseLog = useSupabaseClient();
 
   const sidebarRef = useRef<HTMLDivElement>(null);
 
@@ -50,7 +50,7 @@ function ManageMessage({ session }: { session: Session }) {
         <Button
           text={"Logout"}
           onClick={async () => {
-            const { error } = await supabase.auth.signOut();
+            const { error } = await supabaseLog.auth.signOut();
             if (error) console.log("Error logging out:", error.message);
           }}
         />
