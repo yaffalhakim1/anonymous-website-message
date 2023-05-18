@@ -16,7 +16,6 @@ function PublicForm() {
       .insert([{ message }]);
 
     if (error) {
-      console.log({ error });
       return { error };
     }
 

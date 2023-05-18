@@ -3,21 +3,23 @@ import { Button } from "../base/Button";
 import { supabase } from "@/lib/supabaseClient";
 
 function CommentsCard({ messages }: { messages: any[] }) {
-  const [loading, setLoading] = useState(false);
+  const [loadingMessageId, setLoadingMessageId] = useState<number | null>(null);
 
   async function deleteMessage(messageId: number) {
-    setLoading(true);
+    setLoadingMessageId(messageId);
+
     const { data, error } = await supabase
       .from("messages")
       .delete()
       .eq("id", messageId);
 
     if (error) {
-      console.log({ error });
+      setLoadingMessageId(null);
       return { error };
     }
-    setLoading(false);
-    console.log({ data });
+
+    setLoadingMessageId(null);
+
     return { data };
   }
 
@@ -31,18 +33,23 @@ function CommentsCard({ messages }: { messages: any[] }) {
           <div className="flex justify-between items-center">
             <p className="w-full overflow-wrap break-words">
               {message.message}
-              {message.id}
             </p>
             <div className="flex-shrink-0 ml-4">
               <Button
-                text={loading ? "Deleting..." : "Delete"}
+                text={
+                  loadingMessageId === message.id ? "Deleting..." : "Delete"
+                }
                 variant="delete"
                 onClick={() => deleteMessage(message.id)}
               />
             </div>
           </div>
 
-          <p className="font-thin text-sm mt-2">{message.created_at}</p>
+          <div className="font-thin text-sm mt-2">
+            {new Date(message.created_at).toLocaleDateString()}
+            {" - "}
+            {new Date(message.created_at).toLocaleTimeString()}
+          </div>
         </div>
       ))}
     </>

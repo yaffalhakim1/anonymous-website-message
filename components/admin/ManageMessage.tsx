@@ -7,6 +7,7 @@ import { Menu } from "../base/Icons";
 import useSWR from "swr";
 import { Button } from "../base/Button";
 import { supabase } from "@/lib/supabaseClient";
+import Alert from "../base/Alert";
 
 function ManageMessage({ session }: { session: Session }) {
   const [selectedSubMenuIndex, setSelectedSubMenuIndex] = useState(0);
@@ -19,7 +20,7 @@ function ManageMessage({ session }: { session: Session }) {
     const { data, error } = await supabase
       .from("messages")
       .select("*")
-      .order("id", { ascending: true });
+      .order("id", { ascending: false });
 
     if (error) throw error;
     return data;
@@ -39,6 +40,8 @@ function ManageMessage({ session }: { session: Session }) {
             <div>Error loading messages</div>
           ) : !messages ? (
             <div>Loading...</div>
+          ) : messages.length === 0 ? (
+            <div className="text-center">No messages</div>
           ) : (
             <CommentsCard messages={messages} />
           )}
@@ -46,12 +49,21 @@ function ManageMessage({ session }: { session: Session }) {
       ),
     },
     {
+      title: "Another Needs",
+      content: (
+        <>
+          <div className="text-center">Another Needs</div>
+        </>
+      ),
+    },
+    {
       title: (
         <Button
           text={"Logout"}
+          variant="delete"
           onClick={async () => {
             const { error } = await supabaseLog.auth.signOut();
-            if (error) console.log("Error logging out:", error.message);
+            if (error) <Alert error={error.message} />;
           }}
         />
       ),
@@ -118,15 +130,15 @@ function ManageMessage({ session }: { session: Session }) {
         aria-label="Sidebar"
         ref={sidebarRef}
       >
-        <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+        <div className="h-full px-3 py-4 overflow-y-auto  bg-black">
           <ul className="space-y-2 font-medium">
-            <p className="text-white">Dashboard</p>
+            <p className="text-white font-semibold text-lg mb-4">Dashboard</p>
             {subMenus.map((subMenu, index) => (
               <li key={index}>
                 <div
-                  className={`flex items-center justify-between w-full px-2 py-2 text-sm font-medium leading-5 text-gray-900 rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-600 ${
+                  className={`flex items-center justify-between w-full px-2 py-2 text-sm font-thin leading-5  rounded-lg  text-white hover:text-white hover:font-medium hover:bg-[#888] focus:outline-none focus:ring-2 focus:ring-gray-600 ${
                     selectedSubMenuIndex === index
-                      ? "bg-gray-100 dark:bg-gray-700"
+                      ? "bg-gray-100 dark:bg-[#444]"
                       : ""
                   }`}
                   onClick={() => {

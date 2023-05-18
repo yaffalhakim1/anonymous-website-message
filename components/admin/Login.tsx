@@ -24,10 +24,6 @@ function Login() {
     if (error) {
       setError(error.message);
       setShowAlert(true);
-
-      console.log({ error });
-    } else {
-      console.log({ data });
     }
     setLoading(false);
   }
@@ -38,7 +34,7 @@ function Login() {
         <div className="flex mb-5">
           <LogoIcon width="24px" height="24px" className="text-blue-500" />
           <h2 className="ml-2 text-lg font-semibold text-gray-900">
-            Anonymous message
+            Anonymous message manager
           </h2>
         </div>
 
