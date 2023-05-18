@@ -2,24 +2,35 @@ import React, { useState } from "react";
 import { LogoIcon } from "../base/Icons";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { Button } from "../base/Button";
+import Alert from "../base/Alert";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const session = useSession();
+  const [loading, setLoading] = useState(false);
   const supabase = useSupabaseClient();
+  const [showAlert, setShowAlert] = useState(false);
+  const [error, setError] = useState<any>("");
 
   async function login() {
+    setLoading(true);
+    const loginSuccessful = false; // Set to true if login is successful
     const { data, error } = await supabase.auth.signInWithPassword({
       email: email,
       password: password,
     });
 
     if (error) {
+      setShowAlert(true);
+
+      setError(error.message);
+
       console.log({ error });
     } else {
       console.log({ data });
     }
+
+    setLoading(false);
   }
 
   return (
@@ -74,14 +85,15 @@ function Login() {
               </div>
 
               <Button
-                text={"Sign In"}
-                variant="submit"
+                text={loading ? "Logging in..." : "Login"}
+                variant={loading ? "disabled" : "submit"}
                 onClick={() => login()}
               />
             </section>
           </div>
         </div>
       </div>
+      {showAlert && <Alert error={error.message} />}
     </section>
   );
 }

@@ -37,14 +37,14 @@ function BaseButton({ onClick, text, variant = "submit" }: ButtonProps) {
       isDisabled = true;
       break;
     default:
-      buttonColor = "bg-blue-700 hover:bg-blue-800 focus:ring-blue-500";
+      buttonColor = "bg-[#0070F3] hover:bg-[#0761d1] focus:ring-blue-500";
       break;
   }
   return (
     <button
       type="submit"
       className={`text-white ${buttonColor} hover:${
-        variant === "delete" ? "bg-red-800" : "bg-blue-800"
+        variant === "delete" ? "bg-red-800" : "bg-[#0070F3]"
       } focus:ring-2 focus:outline-none  font-medium rounded-lg text-sm ${buttonClass} px-5 py-2.5 text-center `}
       onClick={onClick}
       disabled={isDisabled}

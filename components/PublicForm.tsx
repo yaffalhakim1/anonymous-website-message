@@ -72,7 +72,7 @@ function PublicForm() {
         </div>
         <Button
           onClick={() => sendMessage(message)}
-          text={loading ? "Sending..." : "Submit"}
+          text={loading ? "Submitting..." : "Submit"}
           variant={loading ? "disabled" : "submit"}
         />
         <div className="flex mt-3">
@@ -86,9 +86,13 @@ function PublicForm() {
       <div className="px-8 md:px-96 text-center">Timeline</div>
       <div>
         {messagesError ? (
-          <div>Error loading messages</div>
+          <div className="text-center flex justify-center items-center">
+            Failed to load messages, please try again later.
+          </div>
         ) : !messages ? (
-          <div>Loading...</div>
+          <div className="text-center flex justify-center items-center">
+            Loading...
+          </div>
         ) : (
           <Messages messages={messages} />
         )}
