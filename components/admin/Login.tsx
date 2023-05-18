@@ -3,6 +3,7 @@ import { LogoIcon } from "../base/Icons";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { Button } from "../base/Button";
 import Alert from "../base/Alert";
+import { motion } from "framer-motion";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -14,22 +15,20 @@ function Login() {
 
   async function login() {
     setLoading(true);
-    const loginSuccessful = false; // Set to true if login is successful
+
     const { data, error } = await supabase.auth.signInWithPassword({
       email: email,
       password: password,
     });
 
     if (error) {
-      setShowAlert(true);
-
       setError(error.message);
+      setShowAlert(true);
 
       console.log({ error });
     } else {
       console.log({ data });
     }
-
     setLoading(false);
   }
 
@@ -83,7 +82,6 @@ function Login() {
                   required
                 />
               </div>
-
               <Button
                 text={loading ? "Logging in..." : "Login"}
                 variant={loading ? "disabled" : "submit"}
@@ -93,7 +91,7 @@ function Login() {
           </div>
         </div>
       </div>
-      {showAlert && <Alert error={error.message} />}
+      {showAlert && <Alert error={error} />}
     </section>
   );
 }
