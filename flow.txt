@@ -1,6 +1,6 @@
 
 
-
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlncW9tdmZ4c29ub2ZpanJ5Y3RhIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODQxNDQ5MDIsImV4cCI6MTk5OTcyMDkwMn0.fo83fln82CvaKfrJnAyCdrGLraA23oD2EWbidOmYpWQ
 1. Public users can submit messages anonymously via a public form.
 2. These messages will be stored in a database using a BaaS/headless CMS like Supabase or Firebase.
 3. The admin user will be able to log in to a personal dashboard.
