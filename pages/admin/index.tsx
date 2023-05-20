@@ -10,27 +10,3 @@ function DashboardAdmin() {
 }
 
 export default DashboardAdmin;
-
-// if u want to use Auth component from supabase
-{
-  /* <Auth
-providers={[]}
-view="sign_in"
-supabaseClient={supabase}
-appearance={{
-  theme: ThemeSupa,
-  variables: {
-    default: {
-      fonts: {
-        bodyFontFamily: "plus-jakarta-sans', sans-serif",
-      },
-      colors: {
-        brand: "blue",
-        brandAccent: "darkblue",
-        defaultButtonBorder: "blue",
-      },
-    },
-  },
-}}
-/> */
-}
