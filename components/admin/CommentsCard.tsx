@@ -1,9 +1,18 @@
 import { useState } from "react";
 import { Button } from "../base/Button";
 import { supabase } from "@/lib/supabaseClient";
+import AlertDialogDelete from "../base/AlertDialog";
 
 function CommentsCard({ messages }: { messages: any[] }) {
   const [loadingMessageId, setLoadingMessageId] = useState<number | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [messageIdToDelete, setMessageIdToDelete] = useState<any>();
+
+  function handleDialogClose() {
+    setIsDialogOpen(false);
+    setLoadingMessageId(null);
+    setMessageIdToDelete(null);
+  }
 
   async function deleteMessage(messageId: number) {
     setLoadingMessageId(messageId);
@@ -17,9 +26,7 @@ function CommentsCard({ messages }: { messages: any[] }) {
       setLoadingMessageId(null);
       return { error };
     }
-
     setLoadingMessageId(null);
-
     return { data };
   }
 
@@ -35,20 +42,19 @@ function CommentsCard({ messages }: { messages: any[] }) {
               {message.message}
             </p>
             <div className="flex-shrink-0 ml-4">
-              <Button
-                text={
-                  loadingMessageId === message.id ? "Deleting..." : "Delete"
-                }
-                variant="delete"
+              <AlertDialogDelete
                 onClick={() => deleteMessage(message.id)}
+                onClose={handleDialogClose}
               />
             </div>
           </div>
-
           <div className="font-thin text-sm mt-2">
-            {new Date(message.created_at).toLocaleDateString()}
-            {" - "}
-            {new Date(message.created_at).toLocaleTimeString()}
+            {new Date(message.created_at).toLocaleDateString()} -{" "}
+            {new Date(message.created_at).toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: false,
+            })}
           </div>
         </div>
       ))}

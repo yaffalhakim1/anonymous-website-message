@@ -26,7 +26,7 @@ function PublicForm() {
     const { data, error } = await supabase
       .from("messages")
       .select("*")
-      .order("id", { ascending: true });
+      .order("id", { ascending: false });
 
     if (error) throw error;
     return data;

@@ -3,8 +3,16 @@ function Messages({ messages }: { messages: any[] }) {
     <>
       {messages.map((message) => (
         <div key={message.id} className="flex flex-col px-8 lg:px-96">
-          <div className="mt-5">{`Message ${message.id}: ${message.message}`}</div>
-          <form>
+          <div className="mt-5 text-lg mb-2">{`${message.message}`}</div>
+          <div className="font-thin text-xs">
+            {new Date(message.created_at).toLocaleDateString()} -{" "}
+            {new Date(message.created_at).toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: false,
+            })}
+          </div>
+          {/* <form>
             <div className="flex items-center py-2 rounded-lg">
               <textarea
                 id="chat"
@@ -31,7 +39,7 @@ function Messages({ messages }: { messages: any[] }) {
           </form>
           <p className="bg-blue-50 p-2 rounded-md text-gray-500">
             some replies
-          </p>
+          </p> */}
         </div>
       ))}
     </>
