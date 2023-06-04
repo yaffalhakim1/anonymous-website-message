@@ -96,10 +96,15 @@ function PublicForm() {
             placeholder="If you have opinions, suggestions, or anything else about me please write here..."
             value={message}
             onChange={(e) => setMessage(e.target.value)}
+            required
           ></textarea>
         </div>
         <Button
-          onClick={() => sendMessage(message)}
+          onClick={() => {
+            if (message.trim() !== "") {
+              sendMessage(message);
+            }
+          }}
           text={loading ? "Submitting..." : "Submit"}
           variant={loading ? "disabled" : "submit"}
         />
@@ -107,6 +112,12 @@ function PublicForm() {
           <IconInfo className="mt-0.5 text-blue-500" />
           <p className="md:text-md text-sm text-gray-500 ml-1">
             I will never know who you are.
+          </p>
+        </div>
+        <div className="flex mt-2">
+          <IconInfo className="mt-0.5 text-red-500" />
+          <p className="md:text-md text-sm text-gray-500 ml-1">
+            You can not send empty message.
           </p>
         </div>
       </div>
