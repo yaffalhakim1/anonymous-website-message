@@ -12,7 +12,15 @@ function Messages({ messages }: { messages: any[] }) {
               hour12: false,
             })}
           </div>
-          {/* <form>
+        </div>
+      ))}
+    </>
+  );
+}
+
+export default Messages;
+{
+  /* <form>
             <div className="flex items-center py-2 rounded-lg">
               <textarea
                 id="chat"
@@ -39,11 +47,5 @@ function Messages({ messages }: { messages: any[] }) {
           </form>
           <p className="bg-blue-50 p-2 rounded-md text-gray-500">
             some replies
-          </p> */}
-        </div>
-      ))}
-    </>
-  );
+          </p> */
 }
-
-export default Messages;

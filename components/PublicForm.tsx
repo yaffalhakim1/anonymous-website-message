@@ -8,6 +8,11 @@ import Messages from "./Messages";
 function PublicForm() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
 
   async function sendMessage(message: string) {
     setLoading(true);
@@ -20,15 +25,17 @@ function PublicForm() {
     }
 
     setLoading(false);
+    setMessage("");
   }
 
-  async function fetcher(url: string) {
+  async function fetcher(url: string, page: number) {
     const { data, error } = await supabase
       .from("messages")
       .select("*")
       .order("id", { ascending: false });
 
     if (error) throw error;
+
     return data;
   }
 
@@ -36,6 +43,12 @@ function PublicForm() {
     revalidateOnFocus: true,
     refreshInterval: 1000,
   });
+
+  const messagesPerPage = 5;
+
+  const startIndex = (currentPage - 1) * messagesPerPage;
+  const endIndex = startIndex + messagesPerPage;
+  const messagesToShow = messages ? messages.slice(startIndex, endIndex) : [];
 
   return (
     <>
@@ -54,9 +67,6 @@ function PublicForm() {
         <h1 className="block text-2xl font-normal text-gray-900 mb-5 text-center">
           Send your secret message here
         </h1>
-        {/* <span className="block text-2xl font-semibold text-gray-900 mb-5 text-center">
-          {"Me"}
-        </span> */}
       </div>
       <div className="mb-6 flex flex-col px-8 lg:px-96">
         <label className="block mb-2 text-sm font-medium text-black ">
@@ -93,11 +103,29 @@ function PublicForm() {
             Failed to load messages, please try again later.
           </div>
         ) : !messages ? (
-          <div className="text-center flex justify-center items-center">
+          <div className="px-8 md:px-96 text-center flex justify-center items-center">
             Loading...
           </div>
         ) : (
-          <Messages messages={messages} />
+          <>
+            <Messages messages={messagesToShow} />
+            <div className="flex justify-center items-center space-x-2 mt-5">
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white text-sm py-2 px-4 rounded"
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+              >
+                Prev
+              </button>
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white text-sm py-2 px-4 rounded"
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={endIndex >= (messages?.length || 0)}
+              >
+                Next
+              </button>
+            </div>
+          </>
         )}
       </div>
     </>
