@@ -124,7 +124,7 @@ function PublicForm() {
         ) : (
           <>
             <Messages messages={messagesToShow} />
-            <div className="flex justify-center items-center space-x-2 mt-5">
+            <div className="flex justify-center items-center space-x-2 mt-5 mb-5">
               <button
                 className={`${
                   currentPage === 1
