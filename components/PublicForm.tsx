@@ -4,6 +4,7 @@ import { Button } from "./base/Button";
 import { supabase } from "../lib/supabaseClient";
 import useSWR from "swr";
 import Messages from "./Messages";
+import Head from "next/head";
 
 function PublicForm() {
   const [message, setMessage] = useState("");
@@ -52,6 +53,20 @@ function PublicForm() {
 
   return (
     <>
+      <Head>
+        <title>Anonymous message</title>
+        <meta
+          name="description"
+          content="Send your secret message here. I will never know who you are."
+        />
+        <meta
+          name="keywords"
+          content="anonymous, message, secret, opinion, suggestion, feedback, comment, yaffa, lhakim, yaffa lhakim, yaffalhakim, yaffalhakim1, yaffa lhakim1, yaffalhakim1.github.io, yaffalhakim1.github.io, yaffalhakim1.github.io/anonymous-website-message, yaffalhakim1.github.io/anonymous-website-message, yaffalhakim1.github.io/anonymous-website-message/"
+        />
+        <meta name="author" content="Muhammad Yafi Alhakim" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </Head>
+
       <div className="flex justify-center mt-5">
         <LogoIcon width="24px" height="24px" className="text-blue-500" />
         <h2 className="ml-2 text-lg font-semibold text-gray-900">
