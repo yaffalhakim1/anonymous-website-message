@@ -111,14 +111,22 @@ function PublicForm() {
             <Messages messages={messagesToShow} />
             <div className="flex justify-center items-center space-x-2 mt-5">
               <button
-                className="bg-blue-500 hover:bg-blue-700 text-white text-sm py-2 px-4 rounded"
+                className={`${
+                  currentPage === 1
+                    ? "bg-blue-400"
+                    : "bg-blue-600 hover:bg-blue-700"
+                } text-white text-sm py-2 px-4 rounded`}
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}
               >
                 Prev
               </button>
               <button
-                className="bg-blue-500 hover:bg-blue-700 text-white text-sm py-2 px-4 rounded"
+                className={`${
+                  endIndex >= (messages?.length || 0)
+                    ? "bg-blue-400"
+                    : "bg-blue-600 hover:bg-blue-700"
+                } text-white text-sm py-2 px-4 rounded`}
                 onClick={() => handlePageChange(currentPage + 1)}
                 disabled={endIndex >= (messages?.length || 0)}
               >
